@@ -5,7 +5,7 @@ homepage: https://github.com/ZyadWKhedr/Liquid_NavBar.git
 repository: https://github.com/ZyadWKhedr/Liquid_NavBar.git
 publish_to: "https://pub.dev"
 environment:
-  sdk: ">=2.19.0 <3.0.0"
+  sdk: ">=2.19.0 <4.0.0"
 
 dependencies:
   flutter:

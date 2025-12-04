@@ -31,14 +31,14 @@ class NavbarState {
 
 class NavbarStateNotifier extends StateNotifier<NavbarState> {
   NavbarStateNotifier()
-    : super(
-        NavbarState(
-          currentIndex: 0,
-          draggablePosition: 0,
-          dragOffset: 0,
-          positions: [],
-        ),
-      ) {
+      : super(
+          NavbarState(
+            currentIndex: 0,
+            draggablePosition: 0,
+            dragOffset: 0,
+            positions: [],
+          ),
+        ) {
     pageController = PageController(initialPage: 0);
   }
 
@@ -108,5 +108,5 @@ class NavbarStateNotifier extends StateNotifier<NavbarState> {
 
 final navbarStateProvider =
     StateNotifierProvider<NavbarStateNotifier, NavbarState>(
-      (ref) => NavbarStateNotifier(),
-    );
+  (ref) => NavbarStateNotifier(),
+);

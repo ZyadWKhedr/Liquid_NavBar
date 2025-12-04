@@ -51,14 +51,12 @@ class NavbarItemWidget extends StatelessWidget {
             FittedBox(
               fit: BoxFit.contain,
               alignment: Alignment.center,
-
               child: Text(
                 label,
                 style: TextStyle(
                   color: isSelected ? selectedColor : unselectedColor,
-                  fontSize: isSelected
-                      ? selectedFontSize.sp
-                      : unselectedFontSize.sp,
+                  fontSize:
+                      isSelected ? selectedFontSize.sp : unselectedFontSize.sp,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                 ),
               ),

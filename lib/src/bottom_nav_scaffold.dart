@@ -62,11 +62,9 @@ class _BottomNavScaffoldState extends ConsumerState<BottomNavScaffold> {
             child: Center(
               child: GestureDetector(
                 behavior: HitTestBehavior.translucent,
-
                 onHorizontalDragUpdate: (details) {
                   notifier.setDragOffset(dragOffset + details.delta.dx * 0.3);
                 },
-
                 onHorizontalDragEnd: (_) {
                   const threshold = 80;
 
@@ -83,7 +81,6 @@ class _BottomNavScaffoldState extends ConsumerState<BottomNavScaffold> {
 
                   notifier.resetDragOffset();
                 },
-
                 child: NavbarWidget(
                   icons: widget.icons,
                   labels: widget.labels,

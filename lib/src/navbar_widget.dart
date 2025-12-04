@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../liquid_navbar.dart';
 
-
 class NavbarWidget extends ConsumerWidget {
   final List<IconData> icons;
   final List<String> labels;
