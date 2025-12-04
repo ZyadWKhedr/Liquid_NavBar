@@ -2,6 +2,10 @@
 
 A beautiful, customizable liquid-glass floating navigation bar for Flutter with a draggable indicator and parallax page transitions.
 
+
+https://github.com/user-attachments/assets/1d4dda9d-4da8-476f-ad0c-b1ee8d4ffd93
+
+
 ![Version](https://img.shields.io/badge/version-0.0.1-blue)
 ![Flutter](https://img.shields.io/badge/flutter-%3E%3D2.19.0-blue)
 
@@ -14,6 +18,10 @@ A beautiful, customizable liquid-glass floating navigation bar for Flutter with 
 - **Customizable**: Full control over colors, sizes, spacing, and styling
 - **State Management**: Built with Riverpod for efficient state management
 - **Responsive**: Uses ScreenUtil for perfect scaling across devices
+
+
+https://github.com/user-attachments/assets/d2f8fa04-39fd-4add-9aed-670734aa0a35
+
 
 ## 📦 Installation
 
