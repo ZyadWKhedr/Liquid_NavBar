@@ -1,3 +1,20 @@
 ## 0.0.1
 
-* TODO: Describe initial release.
+**Initial Release** 🎉
+
+### Features
+* ✨ Liquid glass floating navigation bar with beautiful glasomorphic design
+* 🎯 Draggable indicator that smoothly snaps to navigation items
+* 🌊 Parallax page transitions for smooth navigation experience
+* 📱 Fully responsive and adaptive layout
+* 🎨 Highly customizable with support for custom colors, sizes, and spacing
+* ⚡ Efficient state management using Riverpod
+* 🔧 Modular architecture with reusable components
+
+### Components
+* `BottomNavScaffold` - Main scaffold widget
+* `NavbarWidget` - Navigation bar container
+* `NavbarItemWidget` - Individual navigation items
+* `NavbarDraggableIndicator` - Draggable liquid glass indicator
+* `NavbarBackground` - Glasomorphic background
+* `NavbarProviders` - State management
