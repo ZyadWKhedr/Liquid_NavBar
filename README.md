@@ -29,7 +29,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  liquid_navbar: ^0.0.1
+  liquid_navbar: ^2.0.1
 ```
 
 Then run:
