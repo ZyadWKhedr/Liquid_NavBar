@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../liquid_navbar.dart';
+import 'liquid_navbar_controller.dart';
+import 'navbar_background.dart';
+import 'navbar_draggable_indicator.dart';
+import 'navbar_item_widget.dart';
 
-class NavbarWidget extends StatelessWidget {
+class NavbarWidget extends StatefulWidget {
   final List<Widget> icons;
   final List<String> labels;
   final double indicatorWidth;
@@ -12,6 +15,8 @@ class NavbarWidget extends StatelessWidget {
   final double horizontalPadding;
   final Color selectedColor;
   final Color unselectedColor;
+  final LiquidNavbarController? controller;
+  final ValueChanged<int>? onItemSelected;
 
   const NavbarWidget({
     super.key,
@@ -23,74 +28,111 @@ class NavbarWidget extends StatelessWidget {
     this.horizontalPadding = 20,
     this.selectedColor = Colors.amber,
     this.unselectedColor = Colors.grey,
+    this.controller,
+    this.onItemSelected,
   });
+
+  @override
+  State<NavbarWidget> createState() => _NavbarWidgetState();
+}
+
+class _NavbarWidgetState extends State<NavbarWidget> {
+  late LiquidNavbarController _controller;
+  final List<GlobalKey> _iconKeys = [];
+  final List<double> _positions = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = widget.controller ?? LiquidNavbarController();
+    _controller.addListener(_onControllerUpdate);
+
+    // Initialize keys
+    _iconKeys.addAll(List.generate(widget.icons.length, (_) => GlobalKey()));
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _measurePositions();
+    });
+  }
+
+  @override
+  void didUpdateWidget(NavbarWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.controller != oldWidget.controller) {
+      oldWidget.controller?.removeListener(_onControllerUpdate);
+      if (widget.controller != null) {
+        _controller = widget.controller!;
+        _controller.addListener(_onControllerUpdate);
+      }
+    }
+
+    if (widget.icons.length != _iconKeys.length) {
+      _iconKeys.clear();
+      _iconKeys.addAll(List.generate(widget.icons.length, (_) => GlobalKey()));
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _measurePositions();
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    if (widget.controller == null) {
+      _controller.dispose(); // Dispose local controller
+    } else {
+      _controller.removeListener(_onControllerUpdate);
+    }
+    super.dispose();
+  }
+
+  void _onControllerUpdate() {
+    setState(() {});
+  }
+
+  void _measurePositions() {
+    _positions.clear();
+    for (var key in _iconKeys) {
+      final box = key.currentContext?.findRenderObject() as RenderBox?;
+      if (box != null) {
+        final center = box.localToGlobal(Offset.zero).dx + box.size.width / 2;
+        _positions.push(center);
+      } else {
+        _positions.push(0.0);
+      }
+    }
+
+    if (_positions.isNotEmpty && _positions.length > _controller.currentIndex) {
+      _controller.setDraggablePosition(_positions[_controller.currentIndex]);
+    }
+    setState(() {});
+  }
+
+  void _handleTap(int index) {
+    _controller.setCurrentIndex(index);
+    if (_positions.isNotEmpty && _positions.length > index) {
+      _controller.setDraggablePosition(_positions[index]);
+    }
+    widget.onItemSelected?.call(index);
+  }
+
+  void _handleDragUpdate(double position) {
+    _controller.setDraggablePosition(position);
+  }
+
+  void _handleDragEnd(int index) {
+    _handleTap(index);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ProviderScope(
-      overrides: [
-        navbarStateProvider.overrideWith((ref) => NavbarStateNotifier()),
-      ],
-      child: _NavbarInternal(
-        icons: icons,
-        labels: labels,
-        indicatorWidth: indicatorWidth,
-        navbarHeight: navbarHeight,
-        bottomPadding: bottomPadding,
-        horizontalPadding: horizontalPadding,
-        selectedColor: selectedColor,
-        unselectedColor: unselectedColor,
-      ),
-    );
-  }
-}
-
-class _NavbarInternal extends ConsumerWidget {
-  final List<Widget> icons;
-  final List<String> labels;
-  final double indicatorWidth;
-  final double navbarHeight;
-  final double bottomPadding;
-  final double horizontalPadding;
-  final Color selectedColor;
-  final Color unselectedColor;
-
-  const _NavbarInternal({
-    required this.icons,
-    required this.labels,
-    required this.indicatorWidth,
-    required this.navbarHeight,
-    required this.bottomPadding,
-    required this.horizontalPadding,
-    required this.selectedColor,
-    required this.unselectedColor,
-  });
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final navbarState = ref.watch(navbarStateProvider);
-    final notifier = ref.read(navbarStateProvider.notifier);
-
     final screenWidth = 1.sw;
-    final itemCount = icons.length;
-
-    notifier.initKeys(itemCount);
-    final iconKeys = navbarState.iconKeys;
-
-    // After first frame, measure exact center of each icon
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (navbarState.positions.isEmpty) {
-        notifier.initMeasuredPositions(iconKeys);
-      }
-    });
-
-    final positions = navbarState.positions;
-    final dragCenter = navbarState.draggablePosition;
-    final currentIndex = navbarState.currentIndex;
+    final itemCount = widget.icons.length;
+    final currentIndex = _controller.currentIndex;
+    final dragCenter = _controller.draggablePosition;
 
     return SizedBox(
       width: screenWidth,
-      height: navbarHeight.h + bottomPadding.h,
+      height: widget.navbarHeight.h + widget.bottomPadding.h,
       child: Stack(
         alignment: Alignment.bottomLeft,
         children: [
@@ -98,23 +140,24 @@ class _NavbarInternal extends ConsumerWidget {
           Positioned(
             left: 0,
             right: 0,
-            bottom: bottomPadding.h,
+            bottom: widget.bottomPadding.h,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: horizontalPadding.w),
+              padding:
+                  EdgeInsets.symmetric(horizontal: widget.horizontalPadding.w),
               child: NavbarBackground(
                 width: screenWidth,
-                height: navbarHeight.h,
+                height: widget.navbarHeight.h,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: List.generate(itemCount, (i) {
                     return NavbarItemWidget(
-                      selectedColor: selectedColor,
-                      unselectedColor: unselectedColor,
-                      key: iconKeys[i],
-                      icon: icons[i],
-                      label: labels[i],
+                      selectedColor: widget.selectedColor,
+                      unselectedColor: widget.unselectedColor,
+                      key: _iconKeys[i],
+                      icon: widget.icons[i],
+                      label: widget.labels[i],
                       isSelected: i == currentIndex,
-                      onTap: () => notifier.setCurrentIndex(i),
+                      onTap: () => _handleTap(i),
                       padding: EdgeInsets.symmetric(vertical: 6.h),
                     );
                   }),
@@ -124,18 +167,22 @@ class _NavbarInternal extends ConsumerWidget {
           ),
 
           // Draggable indicator
-          if (positions.isNotEmpty)
+          if (_positions.isNotEmpty)
             NavbarDraggableIndicator(
               position: dragCenter,
-              baseSize: indicatorWidth,
+              baseSize: widget.indicatorWidth,
               itemCount: itemCount,
-              snapPositions: positions,
-              onDragUpdate: notifier.setDraggablePosition,
-              onDragEnd: notifier.setCurrentIndex,
-              bottomOffset: bottomPadding.h,
+              snapPositions: _positions,
+              onDragUpdate: _handleDragUpdate,
+              onDragEnd: _handleDragEnd,
+              bottomOffset: widget.bottomPadding.h,
             ),
         ],
       ),
     );
   }
+}
+
+extension on List<double> {
+  void push(double value) => add(value);
 }

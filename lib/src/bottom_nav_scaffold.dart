@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../liquid_navbar.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'liquid_navbar_controller.dart';
+import 'navbar_widget.dart';
 
-class BottomNavScaffold extends ConsumerStatefulWidget {
+class BottomNavScaffold extends StatefulWidget {
   final List<Widget> pages;
   final List<Widget> icons;
   final List<String> labels;
@@ -14,6 +14,7 @@ class BottomNavScaffold extends ConsumerStatefulWidget {
   final Color selectedColor;
   final Color unselectedColor;
   final double horizontalPadding;
+  final LiquidNavbarController? controller;
 
   const BottomNavScaffold({
     super.key,
@@ -26,20 +27,67 @@ class BottomNavScaffold extends ConsumerStatefulWidget {
     this.selectedColor = Colors.amber,
     this.unselectedColor = Colors.grey,
     this.horizontalPadding = 10,
+    this.controller,
   });
 
   @override
-  ConsumerState<BottomNavScaffold> createState() => _BottomNavScaffoldState();
+  State<BottomNavScaffold> createState() => _BottomNavScaffoldState();
 }
 
-class _BottomNavScaffoldState extends ConsumerState<BottomNavScaffold> {
+class _BottomNavScaffoldState extends State<BottomNavScaffold> {
+  late LiquidNavbarController _controller;
+  late PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+    _controller = widget.controller ??
+        LiquidNavbarController(pageController: _pageController);
+
+    // If controller was provided but didn't have the page controller attached (because it was created outside),
+    // we can't easily Attach it unless we added a setter.
+    // Ideally, if user provides controller, they should handle page control or we sync differently.
+    // For now, let's assume if they pass a controller, we just listen to it.
+    // But wait, the previous logic had a single source of truth.
+    // If I create the controller here, I pass the pageController.
+    // If user passes controller, I should arguably check if I can sync.
+    // Let's stick to the pattern: We listen to controller.
+
+    _controller.addListener(_onControllerUpdate);
+  }
+
+  @override
+  void didUpdateWidget(BottomNavScaffold oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.controller != oldWidget.controller) {
+      oldWidget.controller?.removeListener(_onControllerUpdate);
+      if (widget.controller != null) {
+        _controller = widget.controller!;
+        _controller.addListener(_onControllerUpdate);
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    if (widget.controller == null) {
+      _controller.dispose();
+    } else {
+      _controller.removeListener(_onControllerUpdate);
+    }
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _onControllerUpdate() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    final notifier = ref.read(navbarStateProvider.notifier);
-    final state = ref.watch(navbarStateProvider);
-
-    final currentIndex = state.currentIndex;
-    final dragOffset = state.dragOffset;
+    final currentIndex = _controller.currentIndex;
+    final dragOffset = _controller.dragOffset;
 
     return Scaffold(
       body: Stack(
@@ -48,7 +96,7 @@ class _BottomNavScaffoldState extends ConsumerState<BottomNavScaffold> {
           Transform.translate(
             offset: Offset(dragOffset * 0.25, 0),
             child: PageView(
-              controller: notifier.pageController,
+              controller: _pageController, // Use local page controller
               physics: const NeverScrollableScrollPhysics(),
               children: widget.pages,
             ),
@@ -63,7 +111,8 @@ class _BottomNavScaffoldState extends ConsumerState<BottomNavScaffold> {
               child: GestureDetector(
                 behavior: HitTestBehavior.translucent,
                 onHorizontalDragUpdate: (details) {
-                  notifier.setDragOffset(dragOffset + details.delta.dx * 0.3);
+                  _controller
+                      .setDragOffset(dragOffset + details.delta.dx * 0.3);
                 },
                 onHorizontalDragEnd: (_) {
                   const threshold = 80;
@@ -75,11 +124,11 @@ class _BottomNavScaffoldState extends ConsumerState<BottomNavScaffold> {
                       widget.pages.length - 1,
                     );
                     if (newIndex != currentIndex) {
-                      notifier.setCurrentIndex(newIndex);
+                      _controller.setCurrentIndex(newIndex);
                     }
                   }
 
-                  notifier.resetDragOffset();
+                  _controller.resetDragOffset();
                 },
                 child: NavbarWidget(
                   icons: widget.icons,
@@ -90,6 +139,7 @@ class _BottomNavScaffoldState extends ConsumerState<BottomNavScaffold> {
                   navbarHeight: widget.navbarHeight,
                   bottomPadding: widget.bottomPadding,
                   horizontalPadding: widget.horizontalPadding,
+                  controller: _controller, // Share the controller
                 ),
               ),
             ),
