@@ -1,3 +1,8 @@
+## 2.0.0
+* Renamed package to "LiquidGlass NavBar"
+* Updated horizontal padding parameter to be optional
+* Updated documentation and examples
+
 ## 0.0.1
 
 **Initial Release** 🎉
