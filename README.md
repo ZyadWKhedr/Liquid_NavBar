@@ -6,7 +6,7 @@ A beautiful, customizable liquid-glass floating navigation bar for Flutter with 
 https://github.com/user-attachments/assets/1d4dda9d-4da8-476f-ad0c-b1ee8d4ffd93
 
 
-![Version](https://img.shields.io/badge/version-0.0.1-blue)
+![Version](https://img.shields.io/badge/version-2.0.3-blue)
 ![Flutter](https://img.shields.io/badge/flutter-%3E%3D2.19.0-blue)
 
 ## ✨ Features
@@ -29,7 +29,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  liquid_navbar: ^2.0.2
+  liquid_navbar: ^2.0.3
 ```
 
 Then run:
