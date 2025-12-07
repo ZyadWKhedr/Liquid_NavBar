@@ -68,9 +68,9 @@ class MyApp extends StatelessWidget {
           ProfilePage(),
         ],
         icons: [
-          Icons.home,
-          Icons.search,
-          Icons.person,
+          Icon(Icons.home),
+          Icon(Icons.search),
+          Icon(Icons.person),
         ],
         labels: [
           'Home',
@@ -106,7 +106,7 @@ BottomNavScaffold(
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
 | `pages` | `List<Widget>` | **Required** | List of pages to display |
-| `icons` | `List<IconData>` | **Required** | List of icons for navbar items |
+| `icons` | `List<Widget>` | **Required** | List of icons for navbar items |
 | `labels` | `List<String>` | **Required** | List of labels for navbar items |
 | `navbarHeight` | `double` | `70` | Height of the navigation bar |
 | `indicatorWidth` | `double` | `70` | Base width of the draggable indicator |
@@ -119,7 +119,7 @@ BottomNavScaffold(
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `icon` | `IconData` | **Required** | Icon to display |
+| `icon` | `Widget` | **Required** | Icon to display |
 | `label` | `String` | **Required** | Label text |
 | `isSelected` | `bool` | **Required** | Whether item is selected |
 | `onTap` | `VoidCallback` | **Required** | Callback when tapped |

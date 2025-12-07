@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NavbarItemWidget extends StatelessWidget {
-  final IconData icon;
+  final Widget icon;
   final String label;
   final bool isSelected;
   final VoidCallback onTap;
@@ -42,21 +42,25 @@ class NavbarItemWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              icon,
-              color: isSelected ? selectedColor : unselectedColor,
-              size: (isSelected ? selectedIconSize : unselectedIconSize).sp,
+            IconTheme(
+              data: IconThemeData(
+                color: isSelected ? selectedColor : unselectedColor,
+                size: (isSelected ? selectedIconSize : unselectedIconSize).sp,
+              ),
+              child: icon,
             ),
             SizedBox(height: 3.h),
             FittedBox(
               fit: BoxFit.contain,
               alignment: Alignment.center,
+
               child: Text(
                 label,
                 style: TextStyle(
                   color: isSelected ? selectedColor : unselectedColor,
-                  fontSize:
-                      isSelected ? selectedFontSize.sp : unselectedFontSize.sp,
+                  fontSize: isSelected
+                      ? selectedFontSize.sp
+                      : unselectedFontSize.sp,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                 ),
               ),

@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class BottomNavScaffold extends ConsumerStatefulWidget {
   final List<Widget> pages;
-  final List<IconData> icons;
+  final List<Widget> icons;
   final List<String> labels;
 
   // Optional styling
@@ -62,11 +62,9 @@ class _BottomNavScaffoldState extends ConsumerState<BottomNavScaffold> {
             child: Center(
               child: GestureDetector(
                 behavior: HitTestBehavior.translucent,
-
                 onHorizontalDragUpdate: (details) {
                   notifier.setDragOffset(dragOffset + details.delta.dx * 0.3);
                 },
-
                 onHorizontalDragEnd: (_) {
                   const threshold = 80;
 
@@ -83,10 +81,11 @@ class _BottomNavScaffoldState extends ConsumerState<BottomNavScaffold> {
 
                   notifier.resetDragOffset();
                 },
-
                 child: NavbarWidget(
                   icons: widget.icons,
                   labels: widget.labels,
+                  selectedColor: widget.selectedColor,
+                  unselectedColor: widget.unselectedColor,
                   indicatorWidth: widget.indicatorWidth,
                   navbarHeight: widget.navbarHeight,
                   bottomPadding: widget.bottomPadding,

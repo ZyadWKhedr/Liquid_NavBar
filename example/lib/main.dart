@@ -43,10 +43,10 @@ class NavbarExamplePage extends StatelessWidget {
 
       // Navbar icons
       icons: const [
-        Icons.home_rounded,
-        Icons.search_rounded,
-        Icons.person_rounded,
-        Icons.settings_rounded,
+        Icon(Icons.home_rounded),
+        Icon(Icons.search_rounded),
+        Icon(Icons.person_rounded),
+        Icon(Icons.settings_rounded),
       ],
 
       // Labels
