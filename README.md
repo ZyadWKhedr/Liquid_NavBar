@@ -1,4 +1,4 @@
-# Liquid Navbar 🌊
+# LiquidGlass NavBar 🌊
 
 A beautiful, customizable liquid-glass floating navigation bar for Flutter with a draggable indicator and parallax page transitions.
 
