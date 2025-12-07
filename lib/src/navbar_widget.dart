@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../liquid_navbar.dart';
 
-class NavbarWidget extends ConsumerWidget {
+class NavbarWidget extends StatelessWidget {
   final List<Widget> icons;
   final List<String> labels;
   final double indicatorWidth;
@@ -23,6 +23,47 @@ class NavbarWidget extends ConsumerWidget {
     this.horizontalPadding = 20,
     this.selectedColor = Colors.amber,
     this.unselectedColor = Colors.grey,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ProviderScope(
+      overrides: [
+        navbarStateProvider.overrideWith((ref) => NavbarStateNotifier()),
+      ],
+      child: _NavbarInternal(
+        icons: icons,
+        labels: labels,
+        indicatorWidth: indicatorWidth,
+        navbarHeight: navbarHeight,
+        bottomPadding: bottomPadding,
+        horizontalPadding: horizontalPadding,
+        selectedColor: selectedColor,
+        unselectedColor: unselectedColor,
+      ),
+    );
+  }
+}
+
+class _NavbarInternal extends ConsumerWidget {
+  final List<Widget> icons;
+  final List<String> labels;
+  final double indicatorWidth;
+  final double navbarHeight;
+  final double bottomPadding;
+  final double horizontalPadding;
+  final Color selectedColor;
+  final Color unselectedColor;
+
+  const _NavbarInternal({
+    required this.icons,
+    required this.labels,
+    required this.indicatorWidth,
+    required this.navbarHeight,
+    required this.bottomPadding,
+    required this.horizontalPadding,
+    required this.selectedColor,
+    required this.unselectedColor,
   });
 
   @override
