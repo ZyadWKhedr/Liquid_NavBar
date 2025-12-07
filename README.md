@@ -99,6 +99,9 @@ BottomNavScaffold(
 )
 ```
 
+
+> **IMPORTANT NOTE**: When changing visual parameters such as the **number of icons**, **padding**, or **navbar height**, you **MUST** perform a **Hot Restart** (or full app restart) for the indicator position to be recalculated correctly. Hot Reload is sufficient for color changes, but layout changes require a restart.
+
 ## 🎨 Customization Options
 
 ### BottomNavScaffold Parameters
