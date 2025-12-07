@@ -1,6 +1,6 @@
 name: liquid_navbar
 description: A customizable liquid-glass floating navbar with draggable indicator and parallax pages.
-version: 2.0.1
+version: 2.0.2
 homepage: https://github.com/ZyadWKhedr/Liquid_NavBar.git
 repository: https://github.com/ZyadWKhedr/Liquid_NavBar.git
 environment:

@@ -1,4 +1,4 @@
-## 2.0.1
+## 2.0.2
 * **BREAKING**: Changed `icons` parameter from `List<IconData>` to `List<Widget>` to support any widget as an icon.
 * **BREAKING**: Changed `icon` parameter in `NavbarItemWidget` from `IconData` to `Widget`.
 * Added `selectedColor` and `unselectedColor` parameters to `NavbarWidget` for better customization.
