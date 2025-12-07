@@ -33,19 +33,15 @@ class NavbarWidget extends ConsumerWidget {
     final screenWidth = 1.sw;
     final itemCount = icons.length;
 
-    // Create keys to measure each icon
-    final List<GlobalKey> iconKeys = List.generate(
-      itemCount,
-      (_) => GlobalKey(),
-    );
+    notifier.initKeys(itemCount);
+    final iconKeys = navbarState.iconKeys;
 
     // After first frame, measure exact center of each icon
-    if (navbarState.positions.isEmpty && icons.isNotEmpty) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        // Set measured positions in notifier
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (navbarState.positions.isEmpty) {
         notifier.initMeasuredPositions(iconKeys);
-      });
-    }
+      }
+    });
 
     final positions = navbarState.positions;
     final dragCenter = navbarState.draggablePosition;

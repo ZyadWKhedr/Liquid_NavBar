@@ -3,11 +3,13 @@ import 'package:flutter_riverpod/legacy.dart';
 
 class NavbarState {
   final int currentIndex;
+  final List<GlobalKey> iconKeys;
   final double draggablePosition;
   final double dragOffset;
   final List<double> positions; // Centers of icons
 
   NavbarState({
+    required this.iconKeys,
     required this.currentIndex,
     required this.draggablePosition,
     required this.dragOffset,
@@ -16,11 +18,13 @@ class NavbarState {
 
   NavbarState copyWith({
     int? currentIndex,
+    List<GlobalKey>? iconKeys,
     double? draggablePosition,
     double? dragOffset,
     List<double>? positions,
   }) {
     return NavbarState(
+      iconKeys: iconKeys ?? this.iconKeys,
       currentIndex: currentIndex ?? this.currentIndex,
       draggablePosition: draggablePosition ?? this.draggablePosition,
       dragOffset: dragOffset ?? this.dragOffset,
@@ -33,6 +37,7 @@ class NavbarStateNotifier extends StateNotifier<NavbarState> {
   NavbarStateNotifier()
       : super(
           NavbarState(
+            iconKeys: [],
             currentIndex: 0,
             draggablePosition: 0,
             dragOffset: 0,
@@ -40,6 +45,13 @@ class NavbarStateNotifier extends StateNotifier<NavbarState> {
           ),
         ) {
     pageController = PageController(initialPage: 0);
+  }
+
+  void initKeys(int count) {
+    if (state.iconKeys.isNotEmpty) return;
+
+    final keys = List.generate(count, (_) => GlobalKey());
+    state = state.copyWith(iconKeys: keys);
   }
 
   late final PageController pageController;
