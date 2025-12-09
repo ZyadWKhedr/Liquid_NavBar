@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'responsiveness.dart';
 import '../liquid_navbar.dart';
 import 'liquid_navbar_controller.dart';
-import 'navbar_background.dart';
-import 'navbar_draggable_indicator.dart';
-import 'navbar_item_widget.dart';
 
 class NavbarWidget extends StatefulWidget {
   final List<Widget> icons;
