@@ -1,4 +1,4 @@
-## 2.0.6
+## 2.0.7
 * **BREAKING/IMPROVEMENT**: Removed dependency on `flutter_screenutil`.
 * Now uses standard Flutter `MediaQuery` and logical pixels for responsiveness.
 * Fixed issue where users were forced to use ScreenUtil in their apps.
