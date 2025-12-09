@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'responsiveness.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 
 class NavbarDraggableIndicator extends StatelessWidget {
@@ -24,7 +24,7 @@ class NavbarDraggableIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = 1.sw;
+    final screenWidth = MediaQuery.of(context).size.width;
 
     // Adaptive width based on item count, never smaller than 60.w
     final adaptiveWidth = (baseSize * (3.5 / itemCount).clamp(1, 1.2)).w;

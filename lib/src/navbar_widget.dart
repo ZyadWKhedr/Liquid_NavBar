@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'responsiveness.dart';
 import '../liquid_navbar.dart';
 import 'liquid_navbar_controller.dart';
 import 'navbar_background.dart';
@@ -125,7 +125,7 @@ class _NavbarWidgetState extends State<NavbarWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = 1.sw;
+    final screenWidth = MediaQuery.of(context).size.width;
     final itemCount = widget.icons.length;
     final currentIndex = _controller.currentIndex;
     final dragCenter = _controller.draggablePosition;

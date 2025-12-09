@@ -17,7 +17,7 @@ https://github.com/user-attachments/assets/1d4dda9d-4da8-476f-ad0c-b1ee8d4ffd93
 - **Adaptive Layout**: Automatically adjusts to different screen sizes and item counts
 - **Customizable**: Full control over colors, sizes, spacing, and styling
 - **State Management**: Built with Riverpod for efficient state management
-- **Responsive**: Uses ScreenUtil for perfect scaling across devices
+- **Responsive**: Fully adaptive to different screen sizes using standard Flutter layout
 
 
 https://github.com/user-attachments/assets/d2f8fa04-39fd-4add-9aed-670734aa0a35
@@ -146,7 +146,7 @@ The package is structured with modular, reusable components:
 
 ## 🛠️ Dependencies
 
-- `flutter_screenutil: ^5.9.3` - Responsive sizing
+
 - `liquid_glass_renderer: ^0.2.0-dev.4` - Liquid glass effects
 - `flutter_riverpod: ^3.0.3` - State management
 

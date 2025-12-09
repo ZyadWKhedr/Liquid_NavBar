@@ -1,3 +1,9 @@
+## 2.0.6
+* **BREAKING/IMPROVEMENT**: Removed dependency on `flutter_screenutil`.
+* Now uses standard Flutter `MediaQuery` and logical pixels for responsiveness.
+* Fixed issue where users were forced to use ScreenUtil in their apps.
+* Updated documentation to reflect these changes.
+
 ## 2.0.5
 * **BREAKING**: Changed `icons` parameter from `List<IconData>` to `List<Widget>` to support any widget as an icon.
 * **BREAKING**: Changed `icon` parameter in `NavbarItemWidget` from `IconData` to `Widget`.

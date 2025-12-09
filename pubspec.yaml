@@ -1,6 +1,6 @@
 name: liquid_navbar
 description: A customizable liquid-glass floating navbar with draggable indicator and parallax pages.
-version: 2.0.5
+version: 2.0.6
 homepage: https://github.com/ZyadWKhedr/Liquid_NavBar.git
 repository: https://github.com/ZyadWKhedr/Liquid_NavBar.git
 environment:
@@ -9,7 +9,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_screenutil: ^5.9.3
   liquid_glass_renderer: ^0.2.0-dev.4
   flutter_riverpod: ^3.0.3 
 

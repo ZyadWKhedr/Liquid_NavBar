@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'responsiveness.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 
 /// A glassmorphic background container for the navbar.

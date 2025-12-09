@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:liquid_navbar/liquid_navbar.dart';
 
 void main() {
@@ -11,18 +10,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(360, 690),
-      builder: (context, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Liquid Navbar Example',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
-          home: const NavbarExamplePage(),
-        );
-      },
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Liquid Navbar Example',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const NavbarExamplePage(),
     );
   }
 }
